@@ -3,9 +3,19 @@ import SearchBar from "./components/SearchBar";
 import CategoryFilters from "./components/CategoryFilters";
 import PropertyFeaturedCard from "./components/PropertyFeaturedCard";
 import PropertyCard from "./components/PropertyCard";
-import { featuredProperties, newProperties } from "./data/properties";
+import Pagination from "./components/Pagination";
+import { featuredProperties, getPaginatedProperties } from "./data/properties";
 
-export default function Home() {
+interface HomePageProps {
+  searchParams: Promise<{ page?: string }>;
+}
+
+export default async function Home({ searchParams }: HomePageProps) {
+  const params = await searchParams;
+  const page = Number(params.page ?? '1');
+  const { items, currentPage, totalPages, totalItems, hasPrev, hasNext } =
+    getPaginatedProperties(page);
+
   return (
     <div className="min-h-screen bg-[#EEF6F6] text-[#19322F] font-sans" suppressHydrationWarning>
       <Navbar />
@@ -51,7 +61,10 @@ export default function Home() {
           <div className="flex items-end justify-between mb-8">
             <div>
               <h2 className="text-2xl font-light text-[#19322F]">New in Market</h2>
-              <p className="text-[#5C706D] mt-1 text-sm">Fresh opportunities added this week.</p>
+              <p className="text-[#5C706D] mt-1 text-sm">
+                Fresh opportunities added this week.{" "}
+                <span className="text-[#006655] font-medium">{totalItems} properties</span>
+              </p>
             </div>
             <div className="hidden md:flex bg-white p-1 rounded-lg">
               <button className="px-4 py-1.5 rounded-md text-sm font-medium bg-[#19322F] text-white shadow-sm">All</button>
@@ -61,16 +74,17 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {newProperties.map((property) => (
+            {items.map((property) => (
               <PropertyCard key={property.id} property={property} />
             ))}
           </div>
 
-          <div className="mt-12 text-center">
-            <button className="px-8 py-3 bg-white border border-[#19322F]/10 hover:border-[#006655] hover:text-[#006655] text-[#19322F] font-medium rounded-lg transition-all hover:shadow-md">
-              Load more properties
-            </button>
-          </div>
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            hasPrev={hasPrev}
+            hasNext={hasNext}
+          />
         </section>
       </main>
     </div>

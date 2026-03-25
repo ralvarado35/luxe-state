@@ -222,3 +222,22 @@ export const newProperties: Property[] = [
     type: 'sale',
   },
 ];
+
+export const PROPERTIES_PER_PAGE = 8;
+
+export function getPaginatedProperties(page: number) {
+  const totalItems = newProperties.length;
+  const totalPages = Math.ceil(totalItems / PROPERTIES_PER_PAGE);
+  const currentPage = Math.min(Math.max(1, page), totalPages);
+  const start = (currentPage - 1) * PROPERTIES_PER_PAGE;
+  const items = newProperties.slice(start, start + PROPERTIES_PER_PAGE);
+
+  return {
+    items,
+    currentPage,
+    totalPages,
+    totalItems,
+    hasPrev: currentPage > 1,
+    hasNext: currentPage < totalPages,
+  };
+}

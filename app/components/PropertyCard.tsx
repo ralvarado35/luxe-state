@@ -26,7 +26,7 @@ export default function PropertyCard({ property }: PropertyCardProps) {
       <div className="p-4 flex flex-col flex-grow">
         <div className="flex justify-between items-baseline mb-2">
           <h3 className="font-bold text-lg text-[#19322F]">
-            ${property.price.toLocaleString()}
+            ${property.price.toLocaleString('en-US')}
             {property.type === 'rent' && <span className="text-sm font-normal text-[#5C706D]">/mo</span>}
           </h3>
         </div>

@@ -37,7 +37,7 @@ export default function PropertyFeaturedCard({ property }: PropertyFeaturedCardP
               <span className="material-icons text-sm">place</span> {property.location}
             </p>
           </div>
-          <span className="text-xl font-semibold text-[#006655]">${property.price.toLocaleString()}</span>
+          <span className="text-xl font-semibold text-[#006655]">${property.price.toLocaleString('en-US')}</span>
         </div>
         <div className="flex items-center gap-6 mt-6 pt-6 border-t border-[#19322F]/5">
           <div className="flex items-center gap-2 text-[#5C706D] text-sm">

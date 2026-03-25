@@ -7,7 +7,7 @@ import { featuredProperties, newProperties } from "./data/properties";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[#EEF6F6] text-[#19322F] font-sans">
+    <div className="min-h-screen bg-[#EEF6F6] text-[#19322F] font-sans" suppressHydrationWarning>
       <Navbar />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">

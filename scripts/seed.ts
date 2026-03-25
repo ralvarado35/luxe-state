@@ -28,7 +28,15 @@ async function main() {
         type: prop.type as 'sale' | 'rent',
         isExclusive: prop.isExclusive || false,
         isNew: prop.isNew || false,
-      }).onConflictDoNothing();
+        isFeatured: prop.isFeatured || false,
+      }).onConflictDoUpdate({
+        target: properties.id,
+        set: {
+          isExclusive: prop.isExclusive || false,
+          isNew: prop.isNew || false,
+          isFeatured: prop.isFeatured || false,
+        }
+      });
       console.log(`Inserted property: ${prop.title}`);
     } catch (e) {
       console.error(`Error inserting property ${prop.title}:`, e);

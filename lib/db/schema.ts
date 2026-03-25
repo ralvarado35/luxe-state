@@ -14,4 +14,5 @@ export const properties = pgTable('properties', {
   type: propertyTypeEnum('type').notNull().default('sale'),
   isExclusive: boolean('is_exclusive').default(false),
   isNew: boolean('is_new').default(false),
+  isFeatured: boolean('is_featured').default(false),
 });

@@ -5,14 +5,22 @@ export const propertyTypeEnum = pgEnum('property_type', ['sale', 'rent']);
 export const properties = pgTable('properties', {
   id: text('id').primaryKey(), // Using text to match current mock IDs
   title: text('title').notNull(),
+  slug: text('slug').notNull().unique(),
   price: doublePrecision('price').notNull(),
   location: text('location').notNull(),
   beds: integer('beds').notNull(),
   baths: doublePrecision('baths').notNull(),
   sqft: integer('sqft').notNull(),
-  image: text('image').notNull(),
+  image: text('image').notNull(), // Main thumbnail
   type: propertyTypeEnum('type').notNull().default('sale'),
   isExclusive: boolean('is_exclusive').default(false),
   isNew: boolean('is_new').default(false),
   isFeatured: boolean('is_featured').default(false),
+});
+
+export const propertyImages = pgTable('property_images', {
+  id: text('id').primaryKey(),
+  propertyId: text('property_id').references(() => properties.id, { onDelete: 'cascade' }).notNull(),
+  url: text('url').notNull(),
+  order: integer('order').notNull().default(0),
 });

@@ -390,16 +390,384 @@ export const newProperties: Property[] = [
     amenities: ['Private Vineyard', 'Cellar Tasting Room', 'Horse Stables', 'Guest House'],
     type: 'sale',
   },
+  {
+    id: 'n17',
+    title: 'Skyline Penthouse Suite',
+    slug: 'skyline-penthouse-suite',
+    price: 7200000,
+    location: 'Manhattan, New York',
+    beds: 4,
+    baths: 4,
+    sqft: 4800,
+    image: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1200&q=80',
+    type: 'sale',
+    isExclusive: true,
+    amenities: ['Panoramic Views', 'Private Elevator', 'Concierge', 'Gym'],
+    description: 'Ultra-luxury penthouse atop a Midtown Manhattan tower with 360° views of the skyline and Central Park.',
+  },
+  {
+    id: 'n18',
+    title: 'Tuscan Stone Villa',
+    slug: 'tuscan-stone-villa',
+    price: 3400000,
+    location: 'Florence, Italy',
+    beds: 5,
+    baths: 4,
+    sqft: 5600,
+    image: 'https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=1200&q=80',
+    type: 'sale',
+    isNew: true,
+    amenities: ['Vineyard', 'Olive Garden', 'Stone Terrace', 'Wine Cellar'],
+    description: 'A breathtaking 16th-century stone villa nestled in the rolling Tuscan hills with private vineyard and olive grove.',
+  },
+  {
+    id: 'n19',
+    title: 'Pacific Heights Victorian',
+    slug: 'pacific-heights-victorian',
+    price: 5100000,
+    location: 'San Francisco, California',
+    beds: 6,
+    baths: 5,
+    sqft: 6200,
+    image: 'https://images.unsplash.com/photo-1531971589569-0d9370cbe1e5?auto=format&fit=crop&w=1200&q=80',
+    type: 'sale',
+    amenities: ['Bay Views', 'Chef\'s Kitchen', 'Garden', 'Carriage House'],
+    description: 'An impeccably restored Victorian mansion in prestigious Pacific Heights with sweeping Bay and bridge views.',
+  },
+  {
+    id: 'n20',
+    title: 'Hamptons Beach Estate',
+    slug: 'hamptons-beach-estate',
+    price: 14500000,
+    location: 'Southampton, New York',
+    beds: 8,
+    baths: 9,
+    sqft: 11000,
+    image: 'https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?auto=format&fit=crop&w=1200&q=80',
+    type: 'sale',
+    isExclusive: true,
+    amenities: ['Private Beach', 'Tennis Court', 'Pool', 'Guest House'],
+    description: 'A legendary oceanfront estate in the Hamptons featuring private beach access, formal gardens, and unmatched luxury.',
+  },
+  {
+    id: 'n21',
+    title: 'Zen Courtyard Home',
+    slug: 'zen-courtyard-home',
+    price: 1850000,
+    location: 'Santa Fe, New Mexico',
+    beds: 3,
+    baths: 3,
+    sqft: 2900,
+    image: 'https://images.unsplash.com/photo-1480074568708-e7b720bb3f09?auto=format&fit=crop&w=1200&q=80',
+    type: 'sale',
+    isNew: true,
+    amenities: ['Courtyard Pool', 'Adobe Architecture', 'Mountain Views', 'Meditation Garden'],
+    description: 'A serene adobe residence in Santa Fe with a private zen courtyard, reflecting pool, and dramatic mountain panoramas.',
+  },
+  {
+    id: 'n22',
+    title: 'Portobello Canal House',
+    slug: 'portobello-canal-house',
+    price: 2600000,
+    location: 'Amsterdam, Netherlands',
+    beds: 4,
+    baths: 3,
+    sqft: 3200,
+    image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80',
+    type: 'sale',
+    amenities: ['Canal Views', 'Boat Mooring', 'Historic Facade', 'Private Garden'],
+    description: 'A stunning 17th-century merchant\'s canal house in Amsterdam\'s Golden Bend with private boat mooring and lush courtyard.',
+  },
+  {
+    id: 'n23',
+    title: 'Coconut Grove Compound',
+    slug: 'coconut-grove-compound',
+    price: 9800000,
+    location: 'Coconut Grove, Miami',
+    beds: 7,
+    baths: 8,
+    sqft: 9200,
+    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80',
+    type: 'sale',
+    isExclusive: true,
+    amenities: ['Bayside Views', 'Infinity Pool', 'Private Dock', 'Smart Home'],
+    description: 'A grand tropical compound on Biscayne Bay featuring lush landscaping, private dock, and resort-quality amenities.',
+  },
+  {
+    id: 'n24',
+    title: 'Montmartre Artist Loft',
+    slug: 'montmartre-artist-loft',
+    price: 5200,
+    location: 'Paris, France',
+    beds: 2,
+    baths: 2,
+    sqft: 1600,
+    image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1200&q=80',
+    type: 'rent',
+    isNew: true,
+    amenities: ['Eiffel Tower Views', 'Skylight', 'Exposed Beams', 'Terrace'],
+    description: 'A charming top-floor artist\'s loft in Montmartre with dramatic skylights, exposed oak beams, and Eiffel Tower views.',
+  },
+  {
+    id: 'n25',
+    title: 'Cliffside Retreat',
+    slug: 'cliffside-retreat',
+    price: 4750000,
+    location: 'Big Sur, California',
+    beds: 4,
+    baths: 3.5,
+    sqft: 3600,
+    image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=80',
+    type: 'sale',
+    amenities: ['Ocean Bluff Views', 'Infinity Pool', 'Fire Pits', 'Helipad'],
+    description: 'Perched on the iconic Big Sur coastline, this architectural masterpiece offers absolute seclusion with dramatic Pacific vistas.',
+  },
+  {
+    id: 'n26',
+    title: 'Georgetown Federal Townhouse',
+    slug: 'georgetown-federal-townhouse',
+    price: 3750000,
+    location: 'Georgetown, Washington D.C.',
+    beds: 5,
+    baths: 4.5,
+    sqft: 4100,
+    image: 'https://images.unsplash.com/photo-1560185893-a55cbc8c57e8?auto=format&fit=crop&w=1200&q=80',
+    type: 'sale',
+    amenities: ['Historic Details', 'Chef\'s Kitchen', 'Rooftop Terrace', 'Parking'],
+    description: 'An elegant Federal-style brick townhouse in historic Georgetown with period details and a stunning rooftop entertaining terrace.',
+  },
+  {
+    id: 'n27',
+    title: 'Tulum Jungle Bungalow',
+    slug: 'tulum-jungle-bungalow',
+    price: 1200000,
+    location: 'Tulum, Mexico',
+    beds: 3,
+    baths: 3,
+    sqft: 2200,
+    image: 'https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&w=1200&q=80',
+    type: 'sale',
+    isNew: true,
+    amenities: ['Cenote Access', 'Plunge Pool', 'Palapa Roof', 'Solar Power'],
+    description: 'A sustainably built jungle retreat in Tulum with a private cenote, palapa-style architecture, and off-grid solar systems.',
+  },
+  {
+    id: 'n28',
+    title: 'Lake District Manor',
+    slug: 'lake-district-manor',
+    price: 4900000,
+    location: 'Windermere, England',
+    beds: 7,
+    baths: 6,
+    sqft: 8800,
+    image: 'https://images.unsplash.com/photo-1518780664697-55e3ad937233?auto=format&fit=crop&w=1200&q=80',
+    type: 'sale',
+    isExclusive: true,
+    amenities: ['Lake Views', 'Boathouse', 'Formal Gardens', 'Wine Cellar'],
+    description: 'A distinguished Victorian manor on the shores of Lake Windermere with stunning lake views and private boathouse.',
+  },
+  {
+    id: 'n29',
+    title: 'Chelsea Pied-à-Terre',
+    slug: 'chelsea-pied-a-terre',
+    price: 3800,
+    location: 'Chelsea, London',
+    beds: 2,
+    baths: 2,
+    sqft: 1400,
+    image: 'https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=1200&q=80',
+    type: 'rent',
+    amenities: ['Concierge', 'Private Gym', 'River Views', 'Parking'],
+    description: 'A sophisticated pied-à-terre in coveted Chelsea with Thames views, porter service, and access to a private residents\' garden.',
+  },
+  {
+    id: 'n30',
+    title: 'Blue Ridge Mountain Cabin',
+    slug: 'blue-ridge-mountain-cabin',
+    price: 895000,
+    location: 'Asheville, North Carolina',
+    beds: 4,
+    baths: 3,
+    sqft: 3200,
+    image: 'https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?auto=format&fit=crop&w=1200&q=80',
+    type: 'sale',
+    isNew: true,
+    amenities: ['Mountain Views', 'Hot Tub', 'Stone Fireplace', 'Wraparound Porch'],
+    description: 'A luxury log cabin in the Blue Ridge Mountains with wraparound porches, stone fireplace, and panoramic Appalachian views.',
+  },
+  {
+    id: 'n31',
+    title: 'Patagonia Ranche Estancia',
+    slug: 'patagonia-ranche-estancia',
+    price: 6700000,
+    location: 'Bariloche, Argentina',
+    beds: 6,
+    baths: 5,
+    sqft: 7400,
+    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1200&q=80',
+    type: 'sale',
+    isExclusive: true,
+    amenities: ['Andean Views', 'Private Lake', 'Horse Stables', 'Helicopter Pad'],
+    description: 'A legendary estancia on the shores of a glacial Patagonian lake, offering 500 acres of pristine wilderness and luxury.',
+  },
+  {
+    id: 'n32',
+    title: 'SoHo Cast Iron Loft',
+    slug: 'soho-cast-iron-loft',
+    price: 7500,
+    location: 'SoHo, New York',
+    beds: 3,
+    baths: 2,
+    sqft: 2800,
+    image: 'https://images.unsplash.com/photo-1536437075651-01d675529a5d?auto=format&fit=crop&w=1200&q=80',
+    type: 'rent',
+    amenities: ['Exposed Cast Iron', 'Floor-to-Ceiling Windows', 'Open Kitchen', 'Doorman'],
+    description: 'A magnificent 3,000 sqft loft in a landmarked SoHo cast iron building with original columns and gallery-like proportions.',
+  },
+  {
+    id: 'n33',
+    title: 'Santorini Cliffside Villa',
+    slug: 'santorini-cliffside-villa',
+    price: 5400000,
+    location: 'Oia, Santorini, Greece',
+    beds: 4,
+    baths: 4,
+    sqft: 3800,
+    image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80',
+    type: 'sale',
+    isExclusive: true,
+    amenities: ['Caldera Views', 'Infinity Pool', 'Cave Rooms', 'Sunset Terrace'],
+    description: 'The quintessential Santorini experience — a whitewashed caldera villa with iconic blue-domed views and a sky-pool above the Aegean.',
+  },
+  {
+    id: 'n34',
+    title: 'Gold Coast Penthouse',
+    slug: 'gold-coast-penthouse',
+    price: 3900000,
+    location: 'Chicago, Illinois',
+    beds: 3,
+    baths: 3,
+    sqft: 3400,
+    image: 'https://images.unsplash.com/photo-1551361415-69c87624334c?auto=format&fit=crop&w=1200&q=80',
+    type: 'sale',
+    isNew: true,
+    amenities: ['Lake Michigan Views', 'Rooftop Terrace', 'Private Elevator', 'Gym'],
+    description: 'A dramatic full-floor penthouse in Chicago\'s Gold Coast neighborhood with wraparound lakefront terraces and unmatched skyline views.',
+  },
+  {
+    id: 'n35',
+    title: 'Marbella Golf Estate',
+    slug: 'marbella-golf-estate',
+    price: 8200000,
+    location: 'Marbella, Spain',
+    beds: 7,
+    baths: 8,
+    sqft: 10500,
+    image: 'https://images.unsplash.com/photo-1628744219436-b5e80fa9aa07?auto=format&fit=crop&w=1200&q=80',
+    type: 'sale',
+    isExclusive: true,
+    amenities: ['Golf Course Views', 'Infinity Pool', 'Mediterranean Garden', 'Cinema'],
+    description: 'A palatial Andalusian estate in Marbella\'s Golden Mile with a private cinema, championship golf views, and full-time staff.',
+  },
+  {
+    id: 'n36',
+    title: 'Capitol Hill Craftsman',
+    slug: 'capitol-hill-craftsman',
+    price: 1450000,
+    location: 'Seattle, Washington',
+    beds: 4,
+    baths: 3,
+    sqft: 2800,
+    image: 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=1200&q=80',
+    type: 'sale',
+    isNew: true,
+    amenities: ['Craftsman Detail', 'Rooftop Deck', 'Modern Kitchen', 'Garage'],
+    description: 'A meticulously renovated 1920s Craftsman bungalow in vibrant Capitol Hill with mountain views from a new rooftop deck.',
+  },
 ];
+
+export interface PropertyFilters {
+  query?: string;
+  location?: string;
+  minPrice?: number;
+  maxPrice?: number;
+  type?: string;
+  beds?: number;
+  baths?: number;
+  amenities?: string[];
+  category?: string;
+}
 
 export const PROPERTIES_PER_PAGE = 8;
 
-export function getPaginatedProperties(page: number) {
-  const totalItems = newProperties.length;
-  const totalPages = Math.ceil(totalItems / PROPERTIES_PER_PAGE);
+export function getPaginatedProperties(page: number, filters: PropertyFilters = {}) {
+  console.log('--- Filtering Properties ---');
+  console.log('Filters received:', JSON.stringify(filters, null, 2));
+  
+  let filtered = [...newProperties];
+
+  // Search logic
+  if (filters.query) {
+    const q = filters.query.toLowerCase();
+    filtered = filtered.filter(p => 
+      p.title.toLowerCase().includes(q) || 
+      p.location.toLowerCase().includes(q) ||
+      (p.description && p.description.toLowerCase().includes(q))
+    );
+  }
+
+  // Location filter
+  if (filters.location) {
+    const loc = filters.location.toLowerCase();
+    filtered = filtered.filter(p => p.location.toLowerCase().includes(loc));
+  }
+
+  // Price range
+  if (filters.minPrice !== undefined && !isNaN(filters.minPrice)) {
+    filtered = filtered.filter(p => p.price >= filters.minPrice!);
+  }
+  if (filters.maxPrice !== undefined && !isNaN(filters.maxPrice)) {
+    filtered = filtered.filter(p => p.price <= filters.maxPrice!);
+  }
+
+  // Property type (sale/rent or specific category in title)
+  if (filters.type && filters.type !== 'all' && filters.type !== 'Any Type') {
+    const t = filters.type.toLowerCase();
+    filtered = filtered.filter(p => 
+      p.type === t || p.title.toLowerCase().includes(t)
+    );
+  }
+
+  // Rooms
+  if (filters.beds && filters.beds > 0) {
+    filtered = filtered.filter(p => p.beds >= filters.beds!);
+  }
+  if (filters.baths && filters.baths > 0) {
+    filtered = filtered.filter(p => p.baths >= filters.baths!);
+  }
+
+  // Amenities
+  if (filters.amenities && filters.amenities.length > 0) {
+    filtered = filtered.filter(p => 
+      filters.amenities!.every(a => 
+        p.amenities?.some(pa => pa.toLowerCase().includes(a.toLowerCase()))
+      )
+    );
+  }
+
+  // Category (top-level chips)
+  if (filters.category && filters.category !== 'All') {
+    const cat = filters.category.toLowerCase();
+    filtered = filtered.filter(p => p.title.toLowerCase().includes(cat));
+  }
+
+  console.log('Result count:', filtered.length);
+
+  const totalItems = filtered.length;
+  const totalPages = Math.max(1, Math.ceil(totalItems / PROPERTIES_PER_PAGE));
   const currentPage = Math.min(Math.max(1, page), totalPages);
   const start = (currentPage - 1) * PROPERTIES_PER_PAGE;
-  const items = newProperties.slice(start, start + PROPERTIES_PER_PAGE);
+  const items = filtered.slice(start, start + PROPERTIES_PER_PAGE);
 
   return {
     items,

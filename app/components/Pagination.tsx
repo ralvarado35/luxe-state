@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 
 interface PaginationProps {
   currentPage: number;
@@ -15,6 +16,14 @@ export default function Pagination({
   hasPrev,
   hasNext,
 }: PaginationProps) {
+  const searchParams = useSearchParams();
+  
+  const createPageUrl = (pageNumber: number) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('page', pageNumber.toString());
+    return `/?${params.toString()}`;
+  };
+
   if (totalPages <= 1) return null;
 
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
@@ -24,7 +33,7 @@ export default function Pagination({
       {/* Previous */}
       {hasPrev ? (
         <Link
-          href={`?page=${currentPage - 1}`}
+          href={createPageUrl(currentPage - 1)}
           className="flex items-center gap-1 px-4 py-2 bg-white border border-[#19322F]/10 hover:border-[#006655] hover:text-[#006655] text-[#19322F] font-medium rounded-lg transition-all hover:shadow-md text-sm"
         >
           <span className="material-icons text-base">chevron_left</span>
@@ -42,7 +51,7 @@ export default function Pagination({
         {pages.map((page) => (
           <Link
             key={page}
-            href={`?page=${page}`}
+            href={createPageUrl(page)}
             className={`w-9 h-9 flex items-center justify-center rounded-lg text-sm font-medium transition-all ${
               page === currentPage
                 ? 'bg-[#19322F] text-white shadow-sm'
@@ -57,7 +66,7 @@ export default function Pagination({
       {/* Next */}
       {hasNext ? (
         <Link
-          href={`?page=${currentPage + 1}`}
+          href={createPageUrl(currentPage + 1)}
           className="flex items-center gap-1 px-4 py-2 bg-white border border-[#19322F]/10 hover:border-[#006655] hover:text-[#006655] text-[#19322F] font-medium rounded-lg transition-all hover:shadow-md text-sm"
         >
           Next

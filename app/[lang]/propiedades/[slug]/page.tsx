@@ -3,18 +3,19 @@ import { Metadata } from 'next';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { featuredProperties, newProperties } from '../../data/properties';
-import Navbar from '../../components/Navbar';
+import { getPropertyBySlug } from "../../../data/properties";
+import Navbar from "../../../components/Navbar";
+import { getDictionary, Locale } from "@/lib/get-dictionary";
 
-import PropertyMapClient from '../../components/PropertyMapClient';
+import PropertyMapClient from '../../../components/PropertyMapClient';
 
 interface PageProps {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string; lang: Locale }>;
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { slug } = await params;
-  const property = [...featuredProperties, ...newProperties].find(p => p.slug === slug);
+  const { slug, lang } = await params;
+  const property = await getPropertyBySlug(slug, lang);
   
   if (!property) return { title: 'Property Not Found' };
 
@@ -25,8 +26,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function PropertyPage({ params }: PageProps) {
-  const { slug } = await params;
-  const property = [...featuredProperties, ...newProperties].find(p => p.slug === slug);
+  const { slug, lang } = await params;
+  const dict = await getDictionary(lang);
+  const property = await getPropertyBySlug(slug, lang);
 
   if (!property) {
     notFound();
@@ -39,14 +41,14 @@ export default async function PropertyPage({ params }: PageProps) {
 
   return (
     <div className="min-h-screen bg-[#EEF6F6] text-[#19322F]">
-      <Navbar />
+      <Navbar lang={lang} />
       
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Navigation Breadcrumb */}
         <div className="mb-6 flex items-center gap-2 text-sm text-[#19322F]/60">
-          <Link href="/" className="hover:text-[#006655] transition-colors">Home</Link>
+          <Link href={`/${lang}`} className="hover:text-[#006655] transition-colors">{dict.nav.home}</Link>
           <span className="material-icons text-xs">chevron_right</span>
-          <span className="font-medium text-[#19322F]">Property Details</span>
+          <span className="font-medium text-[#19322F]">{dict.property.details}</span>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-8">
@@ -69,7 +71,7 @@ export default async function PropertyPage({ params }: PageProps) {
               </div>
               <button className="absolute bottom-4 right-4 bg-white/90 hover:bg-white text-[#19322F] px-4 py-2 rounded-lg text-sm font-medium shadow-lg backdrop-blur transition-all flex items-center gap-2">
                 <span className="material-icons text-sm">grid_view</span>
-                View All Photos
+                {dict.property.view_all_photos}
               </button>
             </div>
 
@@ -85,33 +87,33 @@ export default async function PropertyPage({ params }: PageProps) {
             {/* Property Hero Info (Mobile only or redundant) */}
             <div className="bg-white p-8 rounded-xl shadow-sm border border-[#006655]/5 space-y-8">
               <div>
-                <h2 className="text-lg font-semibold mb-6 text-[#19322F]">Property Features</h2>
+                <h2 className="text-lg font-semibold mb-6 text-[#19322F]">{dict.property.features}</h2>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                   <div className="flex flex-col items-center justify-center p-4 bg-[#006655]/5 rounded-lg border border-[#006655]/10">
                     <span className="material-icons text-[#006655] text-2xl mb-2">square_foot</span>
                     <span className="text-xl font-bold text-[#19322F]">{property.sqft}</span>
-                    <span className="text-xs uppercase tracking-wider text-[#19322F]/50">Square Meters</span>
+                    <span className="text-xs uppercase tracking-wider text-[#19322F]/50">{dict.property.sqft}</span>
                   </div>
                   <div className="flex flex-col items-center justify-center p-4 bg-[#006655]/5 rounded-lg border border-[#006655]/10">
                     <span className="material-icons text-[#006655] text-2xl mb-2">bed</span>
                     <span className="text-xl font-bold text-[#19322F]">{property.beds}</span>
-                    <span className="text-xs uppercase tracking-wider text-[#19322F]/50">Bedrooms</span>
+                    <span className="text-xs uppercase tracking-wider text-[#19322F]/50">{dict.property.bedrooms}</span>
                   </div>
                   <div className="flex flex-col items-center justify-center p-4 bg-[#006655]/5 rounded-lg border border-[#006655]/10">
                     <span className="material-icons text-[#006655] text-2xl mb-2">shower</span>
                     <span className="text-xl font-bold text-[#19322F]">{property.baths}</span>
-                    <span className="text-xs uppercase tracking-wider text-[#19322F]/50">Bathrooms</span>
+                    <span className="text-xs uppercase tracking-wider text-[#19322F]/50">{dict.property.bathrooms}</span>
                   </div>
                   <div className="flex flex-col items-center justify-center p-4 bg-[#006655]/5 rounded-lg border border-[#006655]/10">
                     <span className="material-icons text-[#006655] text-2xl mb-2">directions_car</span>
                     <span className="text-xl font-bold text-[#19322F]">2</span>
-                    <span className="text-xs uppercase tracking-wider text-[#19322F]/50">Garage</span>
+                    <span className="text-xs uppercase tracking-wider text-[#19322F]/50">{dict.property.garage}</span>
                   </div>
                 </div>
               </div>
 
               <div>
-                <h2 className="text-lg font-semibold mb-4 text-[#19322F]">About this home</h2>
+                <h2 className="text-lg font-semibold mb-4 text-[#19322F]">{dict.property.about}</h2>
                 <div className="prose prose-slate max-w-none text-[#19322F]/70 leading-relaxed">
                   <p>{property.description || 'No description available for this property.'}</p>
                 </div>
@@ -119,7 +121,7 @@ export default async function PropertyPage({ params }: PageProps) {
 
               {property.amenities && (
                 <div>
-                  <h2 className="text-lg font-semibold mb-6 text-[#19322F]">Amenities</h2>
+                  <h2 className="text-lg font-semibold mb-6 text-[#19322F]">{dict.property.amenities}</h2>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-8">
                     {property.amenities.map((amenity, idx) => (
                       <div key={idx} className="flex items-center gap-3 text-[#19322F]/70">
@@ -173,11 +175,11 @@ export default async function PropertyPage({ params }: PageProps) {
                 <div className="space-y-3">
                   <button className="w-full bg-[#006655] hover:bg-[#005544] text-white py-4 px-6 rounded-lg font-medium transition-all shadow-lg shadow-[#006655]/20 flex items-center justify-center gap-2 group">
                     <span className="material-icons text-xl group-hover:scale-110 transition-transform">calendar_today</span>
-                    Schedule Visit
+                    {dict.property.schedule}
                   </button>
                   <button className="w-full bg-transparent border border-[#19322F]/10 hover:border-[#006655] text-[#19322F]/80 hover:text-[#006655] py-4 px-6 rounded-lg font-medium transition-all flex items-center justify-center gap-2">
                     <span className="material-icons text-xl">mail_outline</span>
-                    Contact Agent
+                    {dict.property.contact_agent}
                   </button>
                 </div>
               </div>

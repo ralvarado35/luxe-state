@@ -1,15 +1,18 @@
 import React from 'react';
 import { Property } from '../data/properties';
-
 import Link from 'next/link';
+import { getDictionary, Locale } from '@/lib/get-dictionary';
 
 interface PropertyFeaturedCardProps {
   property: Property;
+  lang?: string;
 }
 
-export default function PropertyFeaturedCard({ property }: PropertyFeaturedCardProps) {
+export default async function PropertyFeaturedCard({ property, lang = 'es' }: PropertyFeaturedCardProps) {
+  const dict = await getDictionary(lang as Locale);
+
   return (
-    <Link href={`/propiedades/${property.slug}`} className="block">
+    <Link href={`/${lang}/propiedades/${property.slug}`} className="block">
       <div className="group relative rounded-xl overflow-hidden shadow-[0_10px_40px_-10px_rgba(0,0,0,0.05)] bg-white cursor-pointer">
       <div className="aspect-[4/3] w-full overflow-hidden relative">
         <img 
@@ -18,13 +21,13 @@ export default function PropertyFeaturedCard({ property }: PropertyFeaturedCardP
           src={property.image}
         />
         {property.isExclusive && (
-          <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider text-[#19322F]">
-            Exclusive
+          <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider text-[#19322F]">
+            {dict.property.exclusive}
           </div>
         )}
         {property.isNew && (
-          <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider text-[#19322F]">
-            New Arrival
+          <div className={`absolute top-4 ${property.isExclusive ? 'left-24' : 'left-4'} bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider text-[#19322F]`}>
+            {dict.property.new}
           </div>
         )}
         <button className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center text-[#19322F] hover:bg-[#006655] hover:text-white transition-all">
@@ -44,10 +47,10 @@ export default function PropertyFeaturedCard({ property }: PropertyFeaturedCardP
         </div>
         <div className="flex items-center gap-6 mt-6 pt-6 border-t border-[#19322F]/5">
           <div className="flex items-center gap-2 text-[#5C706D] text-sm">
-            <span className="material-icons text-lg">king_bed</span> {property.beds} Beds
+            <span className="material-icons text-lg">king_bed</span> {property.beds} {dict.property.bedrooms}
           </div>
           <div className="flex items-center gap-2 text-[#5C706D] text-sm">
-            <span className="material-icons text-lg">bathtub</span> {property.baths} Baths
+            <span className="material-icons text-lg">bathtub</span> {property.baths} {dict.property.bathrooms}
           </div>
           <div className="flex items-center gap-2 text-[#5C706D] text-sm">
             <span className="material-icons text-lg">square_foot</span> {property.sqft} m²

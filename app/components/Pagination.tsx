@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, usePathname } from 'next/navigation';
 
 interface PaginationProps {
   currentPage: number;
@@ -17,11 +17,12 @@ export default function Pagination({
   hasNext,
 }: PaginationProps) {
   const searchParams = useSearchParams();
+  const pathname = usePathname();
   
   const createPageUrl = (pageNumber: number) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set('page', pageNumber.toString());
-    return `/?${params.toString()}`;
+    return `${pathname}?${params.toString()}`;
   };
 
   if (totalPages <= 1) return null;

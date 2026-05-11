@@ -1,13 +1,15 @@
 import { Suspense } from "react";
-import Navbar from "./components/Navbar";
-import SearchBar from "./components/SearchBar";
-import CategoryFilters from "./components/CategoryFilters";
-import PropertyFeaturedCard from "./components/PropertyFeaturedCard";
-import PropertyCard from "./components/PropertyCard";
-import Pagination from "./components/Pagination";
-import { featuredProperties, getPaginatedProperties } from "./data/properties";
+import Navbar from "../components/Navbar";
+import SearchBar from "../components/SearchBar";
+import CategoryFilters from "../components/CategoryFilters";
+import PropertyFeaturedCard from "../components/PropertyFeaturedCard";
+import PropertyCard from "../components/PropertyCard";
+import Pagination from "../components/Pagination";
+import { getFeaturedProperties, getPaginatedProperties } from "../data/properties";
+import { getDictionary, Locale } from "@/lib/get-dictionary";
 
 interface HomePageProps {
+  params: Promise<{ lang: Locale }>;
   searchParams: Promise<{ 
     page?: string;
     q?: string;
@@ -24,25 +26,28 @@ interface HomePageProps {
 
 export const dynamic = 'force-dynamic';
 
-export default async function Home({ searchParams }: HomePageProps) {
-  const params = await searchParams;
-  const page = Number(params.page ?? '1');
+export default async function Home({ params, searchParams }: HomePageProps) {
+  const { lang } = await params;
+  const dict = await getDictionary(lang);
+  const sParams = await searchParams;
+  const page = Number(sParams.page ?? '1');
   
   const filters: any = {};
-  if (params.q) filters.query = params.q;
-  if (params.location) filters.location = params.location;
-  if (params.minPrice) filters.minPrice = parseInt(params.minPrice);
-  if (params.maxPrice) filters.maxPrice = parseInt(params.maxPrice);
-  if (params.type) filters.type = params.type;
-  if (params.beds) filters.beds = parseInt(params.beds);
-  if (params.baths) filters.baths = parseInt(params.baths);
-  if (params.amenities) filters.amenities = params.amenities.split(',');
-  if (params.category) filters.category = params.category;
+  if (sParams.q) filters.query = sParams.q;
+  if (sParams.location) filters.location = sParams.location;
+  if (sParams.minPrice) filters.minPrice = parseInt(sParams.minPrice);
+  if (sParams.maxPrice) filters.maxPrice = parseInt(sParams.maxPrice);
+  if (sParams.type) filters.type = sParams.type;
+  if (sParams.beds) filters.beds = parseInt(sParams.beds);
+  if (sParams.baths) filters.baths = parseInt(sParams.baths);
+  if (sParams.amenities) filters.amenities = sParams.amenities.split(',');
+  if (sParams.category) filters.category = sParams.category;
 
   const { items, currentPage, totalPages, totalItems, hasPrev, hasNext } =
-    getPaginatedProperties(page, filters);
+    await getPaginatedProperties(page, filters, lang);
 
-  const filteredFeatured = featuredProperties.filter(p => {
+  const featured = await getFeaturedProperties(lang);
+  const filteredFeatured = featured.filter(p => {
     if (!filters.query && !filters.location && !filters.type && !filters.category) return true;
     
     const q = (filters.query || '').toLowerCase();
@@ -60,25 +65,34 @@ export default async function Home({ searchParams }: HomePageProps) {
 
   return (
     <div className="min-h-screen bg-[#EEF6F6] text-[#19322F] font-sans" suppressHydrationWarning>
-      <Navbar />
+      <Navbar lang={lang} />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
         {/* Hero Section */}
         <section className="py-12 md:py-16">
           <div className="max-w-3xl mx-auto text-center space-y-8">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-light text-[#19322F] leading-tight">
-              Find your <span className="relative inline-block">
-                <span className="relative z-10 font-medium">sanctuary</span>
+              {dict.hero.title_start}{" "}
+              <span className="relative inline-block">
+                <span className="relative z-10 font-medium">{dict.hero.highlighted}</span>
                 <span className="absolute bottom-2 left-0 w-full h-3 bg-[#006655]/20 -rotate-1 z-0"></span>
               </span>.
             </h1>
             
             <Suspense fallback={<div className="h-16 bg-white/50 animate-pulse rounded-xl max-w-2xl mx-auto" />}>
-              <SearchBar />
+              <SearchBar 
+                placeholder={dict.search.placeholder} 
+                buttonText={dict.search.button}
+                lang={lang}
+              />
             </Suspense>
             
             <Suspense fallback={<div className="h-10 bg-white/50 animate-pulse rounded-full w-64 mx-auto" />}>
-              <CategoryFilters />
+              <CategoryFilters 
+                dict={dict.search}
+                filterDict={dict.filter}
+                lang={lang}
+              />
             </Suspense>
           </div>
         </section>
@@ -88,16 +102,16 @@ export default async function Home({ searchParams }: HomePageProps) {
           <section className="mb-16">
             <div className="flex items-center justify-between mb-8">
               <h2 className="text-2xl font-light text-[#19322F]">
-                Featured <span className="font-semibold text-[#006655]">Collections</span>
+                {dict.property.featured_collections_start} <span className="font-semibold text-[#006655]">{dict.property.featured_collections_highlight}</span>
               </h2>
               <button className="text-[#006655] font-medium text-sm flex items-center gap-1 hover:underline">
-                View all <span className="material-icons text-base">arrow_forward</span>
+                {dict.property.view_all} <span className="material-icons text-base">arrow_forward</span>
               </button>
             </div>
             
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {filteredFeatured.map((property) => (
-                <PropertyFeaturedCard key={property.id} property={property} />
+                <PropertyFeaturedCard key={property.id} property={property} lang={lang} />
               ))}
             </div>
           </section>
@@ -108,11 +122,11 @@ export default async function Home({ searchParams }: HomePageProps) {
           <div className="flex items-end justify-between mb-8">
             <div>
               <h2 className="text-2xl font-light text-[#19322F]">
-                New <span className="font-semibold text-[#006655]">in Market</span>
+                {dict.property.new_in_market_start} <span className="font-semibold text-[#006655]">{dict.property.new_in_market_highlight}</span>
               </h2>
               <p className="text-[#5C706D] mt-1 text-sm">
-                Fresh opportunities added this week.{" "}
-                <span className="text-[#006655] font-medium">{totalItems} properties match</span>
+                {dict.property.fresh_opportunities}{" "}
+                <span className="text-[#006655] font-medium">{totalItems} {dict.property.matches}</span>
               </p>
             </div>
           </div>
@@ -120,13 +134,13 @@ export default async function Home({ searchParams }: HomePageProps) {
           {items.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {items.map((property) => (
-                <PropertyCard key={property.id} property={property} />
+                <PropertyCard key={property.id} property={property} lang={lang} />
               ))}
             </div>
           ) : (
             <div className="text-center py-20 bg-white rounded-3xl border border-dashed border-[#19322F]/10">
               <span className="material-icons text-5xl text-[#5C706D]/30 mb-4">search_off</span>
-              <p className="text-[#5C706D] text-lg">No properties found matching your filters.</p>
+              <p className="text-[#5C706D] text-lg">{dict.property.no_properties_found}</p>
             </div>
           )}
 

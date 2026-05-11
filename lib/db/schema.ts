@@ -1,9 +1,10 @@
 import { pgTable, text, integer, doublePrecision, boolean, pgEnum } from 'drizzle-orm/pg-core';
+import { relations } from 'drizzle-orm';
 
 export const propertyTypeEnum = pgEnum('property_type', ['sale', 'rent']);
 
 export const properties = pgTable('properties', {
-  id: text('id').primaryKey(), // Using text to match current mock IDs
+  id: text('id').primaryKey(),
   title: text('title').notNull(),
   slug: text('slug').notNull().unique(),
   price: doublePrecision('price').notNull(),
@@ -11,7 +12,7 @@ export const properties = pgTable('properties', {
   beds: integer('beds').notNull(),
   baths: doublePrecision('baths').notNull(),
   sqft: integer('sqft').notNull(),
-  image: text('image').notNull(), // Main thumbnail
+  image: text('image').notNull(),
   type: propertyTypeEnum('type').notNull().default('sale'),
   isExclusive: boolean('is_exclusive').default(false),
   isNew: boolean('is_new').default(false),
@@ -24,3 +25,14 @@ export const propertyImages = pgTable('property_images', {
   url: text('url').notNull(),
   order: integer('order').notNull().default(0),
 });
+
+export const propertiesRelations = relations(properties, ({ many }) => ({
+  images: many(propertyImages),
+}));
+
+export const propertyImagesRelations = relations(propertyImages, ({ one }) => ({
+  property: one(properties, {
+    fields: [propertyImages.propertyId],
+    references: [properties.id],
+  }),
+}));

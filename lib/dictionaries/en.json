@@ -1,0 +1,83 @@
+{
+  "nav": {
+    "home": "Home",
+    "properties": "Properties",
+    "about": "About Us",
+    "contact": "Contact",
+    "buy": "Buy",
+    "rent": "Rent",
+    "sell": "Sell",
+    "saved": "Saved Homes"
+  },
+  "hero": {
+    "title_start": "Find your",
+    "highlighted": "sanctuary",
+    "subtitle": "Luxury homes in the best locations.",
+    "cta": "Explore Properties"
+  },
+  "search": {
+    "placeholder": "Search by city, neighborhood, or address...",
+    "button": "Search",
+    "filters": "Filters",
+    "categories": {
+      "all": "All",
+      "house": "House",
+      "apartment": "Apartment",
+      "villa": "Villa",
+      "penthouse": "Penthouse"
+    }
+  },
+  "filter": {
+    "title": "Filters",
+    "location_label": "Location",
+    "location_placeholder": "City, neighborhood, or address",
+    "price_range": "Price Range",
+    "any": "Any",
+    "min_price": "Min Price",
+    "max_price": "Max Price",
+    "property_type": "Property Type",
+    "any_type": "Any Type",
+    "bedrooms": "Bedrooms",
+    "bathrooms": "Bathrooms",
+    "amenities_label": "Amenities & Features",
+    "clear_all": "Clear all filters",
+    "show_homes": "Show Homes",
+    "amenities": {
+      "pool": "Swimming Pool",
+      "gym": "Gym",
+      "parking": "Parking",
+      "ac": "Air Conditioning",
+      "wifi": "High-speed Wifi",
+      "terrace": "Patio / Terrace"
+    }
+  },
+  "common": {
+    "language": "Language",
+    "select_language": "Select language"
+  },
+  "property": {
+    "details": "Property Details",
+    "features": "Property Features",
+    "sqft": "Square Meters",
+    "bedrooms": "Bedrooms",
+    "bathrooms": "Bathrooms",
+    "garage": "Garage",
+    "about": "About this home",
+    "amenities": "Amenities",
+    "schedule": "Schedule Visit",
+    "contact_agent": "Contact Agent",
+    "view_all_photos": "View All Photos",
+    "featured_collections_start": "Featured",
+    "featured_collections_highlight": "Collections",
+    "new_in_market_start": "New in",
+    "new_in_market_highlight": "Market",
+    "view_all": "View all",
+    "fresh_opportunities": "Fresh opportunities added this week.",
+    "matches": "properties match",
+    "no_properties_found": "No properties found matching your filters.",
+    "for_sale": "FOR SALE",
+    "for_rent": "FOR RENT",
+    "exclusive": "Exclusive",
+    "new": "New Arrival"
+  }
+}

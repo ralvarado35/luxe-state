@@ -1,0 +1,83 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "properties": "Propiedades",
+    "about": "Nosotros",
+    "contact": "Contacto",
+    "buy": "Comprar",
+    "rent": "Alquilar",
+    "sell": "Vender",
+    "saved": "Guardados"
+  },
+  "hero": {
+    "title_start": "Encuentra tu",
+    "highlighted": "santuario",
+    "subtitle": "Casas de lujo en las mejores ubicaciones.",
+    "cta": "Explorar Propiedades"
+  },
+  "search": {
+    "placeholder": "Buscar por ciudad, barrio o dirección...",
+    "button": "Buscar",
+    "filters": "Filtros",
+    "categories": {
+      "all": "Todos",
+      "house": "Casa",
+      "apartment": "Apartamento",
+      "villa": "Villa",
+      "penthouse": "Penthouse"
+    }
+  },
+  "filter": {
+    "title": "Filtros",
+    "location_label": "Ubicación",
+    "location_placeholder": "Ciudad, barrio o dirección",
+    "price_range": "Rango de Precios",
+    "any": "Cualquiera",
+    "min_price": "Precio Mínimo",
+    "max_price": "Precio Máximo",
+    "property_type": "Tipo de Propiedad",
+    "any_type": "Cualquier Tipo",
+    "bedrooms": "Dormitorios",
+    "bathrooms": "Baños",
+    "amenities_label": "Comodidades y Características",
+    "clear_all": "Limpiar todos los filtros",
+    "show_homes": "Mostrar Casas",
+    "amenities": {
+      "pool": "Piscina",
+      "gym": "Gimnasio",
+      "parking": "Estacionamiento",
+      "ac": "Aire Acondicionado",
+      "wifi": "Wifi de alta velocidad",
+      "terrace": "Patio / Terraza"
+    }
+  },
+  "common": {
+    "language": "Idioma",
+    "select_language": "Seleccionar idioma"
+  },
+  "property": {
+    "details": "Detalles de la propiedad",
+    "features": "Características",
+    "sqft": "Metros Cuadrados",
+    "bedrooms": "Dormitorios",
+    "bathrooms": "Baños",
+    "garage": "Garaje",
+    "about": "Sobre esta casa",
+    "amenities": "Comodidades",
+    "schedule": "Programar Visita",
+    "contact_agent": "Contactar Agente",
+    "view_all_photos": "Ver todas las fotos",
+    "featured_collections_start": "Colecciones",
+    "featured_collections_highlight": "Destacadas",
+    "new_in_market_start": "Novedades en el",
+    "new_in_market_highlight": "Mercado",
+    "view_all": "Ver todo",
+    "fresh_opportunities": "Nuevas oportunidades añadidas esta semana.",
+    "matches": "propiedades coinciden",
+    "no_properties_found": "No se encontraron propiedades que coincidan con sus filtros.",
+    "for_sale": "EN VENTA",
+    "for_rent": "EN ALQUILER",
+    "exclusive": "Exclusivo",
+    "new": "Novedad"
+  }
+}

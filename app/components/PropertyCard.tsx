@@ -1,15 +1,18 @@
 import React from 'react';
 import { Property } from '../data/properties';
-
 import Link from 'next/link';
+import { getDictionary, Locale } from '@/lib/get-dictionary';
 
 interface PropertyCardProps {
   property: Property;
+  lang?: string;
 }
 
-export default function PropertyCard({ property }: PropertyCardProps) {
+export default async function PropertyCard({ property, lang = 'es' }: PropertyCardProps) {
+  const dict = await getDictionary(lang as Locale);
+  
   return (
-    <Link href={`/propiedades/${property.slug}`} className="block h-full">
+    <Link href={`/${lang}/propiedades/${property.slug}`} className="block h-full">
       <article className="bg-white rounded-xl overflow-hidden shadow-[0_4px_6px_-1px_rgba(0,0,0,0.02),0_2px_4px_-1px_rgba(0,0,0,0.02)] hover:shadow-[0_10px_40px_-10px_rgba(0,0,0,0.05)] transition-all duration-300 group cursor-pointer h-full flex flex-col">
       <div className="relative aspect-[4/3] overflow-hidden">
         <img 
@@ -20,10 +23,10 @@ export default function PropertyCard({ property }: PropertyCardProps) {
         <button className="absolute top-3 right-3 p-2 bg-white/90 rounded-full hover:bg-[#006655] hover:text-white transition-colors text-[#19322F]">
           <span className="material-icons text-lg">favorite_border</span>
         </button>
-        <div className={`absolute bottom-3 left-3 text-white text-xs font-bold px-2 py-1 rounded ${
+        <div className={`absolute bottom-3 left-3 text-white text-[10px] font-bold px-2 py-1 rounded ${
           property.type === 'sale' ? 'bg-[#19322F]/90' : 'bg-[#006655]/90'
         }`}>
-          {property.type === 'sale' ? 'FOR SALE' : 'FOR RENT'}
+          {property.type === 'sale' ? dict.property.for_sale : dict.property.for_rent}
         </div>
       </div>
       <div className="p-4 flex flex-col flex-grow">
@@ -43,7 +46,7 @@ export default function PropertyCard({ property }: PropertyCardProps) {
             <span className="material-icons text-sm text-[#006655]/80">bathtub</span> {property.baths}
           </div>
           <div className="flex items-center gap-1 text-[#5C706D] text-xs">
-            <span className="material-icons text-sm text-[#006655]/80">square_foot</span> {property.sqft}m²
+            <span className="material-icons text-sm text-[#006655]/80">square_foot</span> {property.sqft} m²
           </div>
         </div>
       </div>

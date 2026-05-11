@@ -6,18 +6,62 @@ import { useRouter, useSearchParams } from 'next/navigation';
 interface FilterModalProps {
   isOpen: boolean;
   onClose: () => void;
+  lang?: string;
+  dict?: {
+    title: string;
+    location_label: string;
+    location_placeholder: string;
+    price_range: string;
+    any: string;
+    min_price: string;
+    max_price: string;
+    property_type: string;
+    any_type: string;
+    bedrooms: string;
+    bathrooms: string;
+    amenities_label: string;
+    clear_all: string;
+    show_homes: string;
+    amenities: {
+      pool: string;
+      gym: string;
+      parking: string;
+      ac: string;
+      wifi: string;
+      terrace: string;
+    }
+  };
 }
 
-const AMENITIES = [
-  { id: 'pool', icon: 'pool', label: 'Swimming Pool' },
-  { id: 'gym', icon: 'fitness_center', label: 'Gym' },
-  { id: 'parking', icon: 'local_parking', label: 'Parking' },
-  { id: 'ac', icon: 'ac_unit', label: 'Air Conditioning' },
-  { id: 'wifi', icon: 'wifi', label: 'High-speed Wifi' },
-  { id: 'terrace', icon: 'deck', label: 'Patio / Terrace' },
-];
-
-export default function FilterModal({ isOpen, onClose }: FilterModalProps) {
+export default function FilterModal({ 
+  isOpen, 
+  onClose, 
+  lang = 'es',
+  dict = {
+    title: 'Filters',
+    location_label: 'Location',
+    location_placeholder: 'City, neighborhood, or address',
+    price_range: 'Price Range',
+    any: 'Any',
+    min_price: 'Min Price',
+    max_price: 'Max Price',
+    property_type: 'Property Type',
+    any_type: 'Any Type',
+    bedrooms: 'Bedrooms',
+    bathrooms: 'Bathrooms',
+    amenities_label: 'Amenities & Features',
+    clear_all: 'Clear all filters',
+    show_homes: 'Show Homes',
+    amenities: {
+      pool: 'Swimming Pool',
+      gym: 'Gym',
+      parking: 'Parking',
+      ac: 'Air Conditioning',
+      wifi: 'High-speed Wifi',
+      terrace: 'Patio / Terrace'
+    }
+  }
+}: FilterModalProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -30,6 +74,15 @@ export default function FilterModal({ isOpen, onClose }: FilterModalProps) {
   const [amenities, setAmenities] = useState<Set<string>>(
     new Set(searchParams.get('amenities')?.split(',') || [])
   );
+
+  const AMENITIES = [
+    { id: 'pool', icon: 'pool', label: dict.amenities.pool },
+    { id: 'gym', icon: 'fitness_center', label: dict.amenities.gym },
+    { id: 'parking', icon: 'local_parking', label: dict.amenities.parking },
+    { id: 'ac', icon: 'ac_unit', label: dict.amenities.ac },
+    { id: 'wifi', icon: 'wifi', label: dict.amenities.wifi },
+    { id: 'terrace', icon: 'deck', label: dict.amenities.terrace },
+  ];
 
   const handleClose = useCallback(() => {
     onClose();
@@ -81,7 +134,6 @@ export default function FilterModal({ isOpen, onClose }: FilterModalProps) {
     setBaths(0);
     setAmenities(new Set());
     
-    // Immediately clear all search params and close
     const params = new URLSearchParams(searchParams.toString());
     params.delete('location');
     params.delete('minPrice');
@@ -91,7 +143,7 @@ export default function FilterModal({ isOpen, onClose }: FilterModalProps) {
     params.delete('baths');
     params.delete('amenities');
     params.set('page', '1');
-    router.push(`/?${params.toString()}`);
+    router.push(`/${lang}?${params.toString()}`);
     handleClose();
   };
 
@@ -112,7 +164,7 @@ export default function FilterModal({ isOpen, onClose }: FilterModalProps) {
     }
     
     params.set('page', '1');
-    router.push(`/?${params.toString()}`);
+    router.push(`/${lang}?${params.toString()}`);
     handleClose();
   };
 
@@ -128,32 +180,26 @@ export default function FilterModal({ isOpen, onClose }: FilterModalProps) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      {/* Overlay */}
       <div
         className="absolute inset-0 bg-gray-900/40 backdrop-blur-sm transition-opacity"
         onClick={handleClose}
       />
 
-      {/* Modal / Use framer-motion here for extra WOW later, but let's stick to base requirements first */}
       <div className="relative z-10 w-full max-w-2xl bg-white rounded-xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
-        {/* Header */}
         <header className="px-8 py-6 border-b border-gray-100 flex justify-between items-center bg-white sticky top-0 z-30">
-          <h2 className="text-2xl font-semibold tracking-tight text-gray-900">Filters</h2>
+          <h2 className="text-2xl font-semibold tracking-tight text-gray-900">{dict.title}</h2>
           <button
             onClick={handleClose}
             className="p-2 rounded-full hover:bg-gray-100 transition-colors text-gray-500"
-            aria-label="Close filters"
           >
             <span className="material-icons">close</span>
           </button>
         </header>
 
-        {/* Scrollable Content */}
         <div className="flex-1 overflow-y-auto p-8 space-y-10" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-          {/* Section 1: Location */}
           <section>
             <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
-              Location
+              {dict.location_label}
             </label>
             <div className="relative group">
               <span className="material-icons absolute left-4 top-3.5 text-gray-400 group-focus-within:text-[#006655] transition-colors">
@@ -163,28 +209,27 @@ export default function FilterModal({ isOpen, onClose }: FilterModalProps) {
                 type="text"
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
-                placeholder="City, neighborhood, or address"
+                placeholder={dict.location_placeholder}
                 className="w-full pl-12 pr-4 py-3 bg-[#f5f8f6] border-0 rounded-lg text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-[#006655] focus:bg-white transition-all shadow-sm outline-none"
               />
             </div>
           </section>
 
-          {/* Section 2: Price Range */}
           <section>
             <div className="flex justify-between items-end mb-4">
               <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                Price Range
+                {dict.price_range}
               </label>
               {(minPrice || maxPrice) && (
                 <span className="text-sm font-medium text-[#006655]">
-                  {minPrice ? `$${parseInt(minPrice.replace(/,/g, '')).toLocaleString()}` : 'Any'} – {maxPrice ? `$${parseInt(maxPrice.replace(/,/g, '')).toLocaleString()}` : 'Any'}
+                  {minPrice ? `$${parseInt(minPrice.replace(/,/g, '')).toLocaleString()}` : dict.any} – {maxPrice ? `$${parseInt(maxPrice.replace(/,/g, '')).toLocaleString()}` : dict.any}
                 </span>
               )}
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="bg-[#f5f8f6] p-3 rounded-lg border border-transparent focus-within:border-[#006655]/30 transition-colors">
                 <label className="block text-[10px] text-gray-500 uppercase font-medium mb-1">
-                  Min Price
+                  {dict.min_price}
                 </label>
                 <div className="flex items-center">
                   <span className="text-gray-400 mr-1">$</span>
@@ -199,7 +244,7 @@ export default function FilterModal({ isOpen, onClose }: FilterModalProps) {
               </div>
               <div className="bg-[#f5f8f6] p-3 rounded-lg border border-transparent focus-within:border-[#006655]/30 transition-colors">
                 <label className="block text-[10px] text-gray-500 uppercase font-medium mb-1">
-                  Max Price
+                  {dict.max_price}
                 </label>
                 <div className="flex items-center">
                   <span className="text-gray-400 mr-1">$</span>
@@ -207,7 +252,7 @@ export default function FilterModal({ isOpen, onClose }: FilterModalProps) {
                     type="text"
                     value={maxPrice}
                     onChange={(e) => setMaxPrice(e.target.value)}
-                    placeholder="Any"
+                    placeholder={dict.any}
                     className="w-full bg-transparent border-0 p-0 text-gray-900 font-medium focus:ring-0 text-sm outline-none"
                   />
                 </div>
@@ -215,12 +260,10 @@ export default function FilterModal({ isOpen, onClose }: FilterModalProps) {
             </div>
           </section>
 
-          {/* Section 3: Property Details */}
           <section className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Property Type */}
             <div className="space-y-3">
               <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                Property Type
+                {dict.property_type}
               </label>
               <div className="relative">
                 <select
@@ -228,13 +271,11 @@ export default function FilterModal({ isOpen, onClose }: FilterModalProps) {
                   onChange={(e) => setPropertyType(e.target.value)}
                   className="w-full bg-[#f5f8f6] border-0 rounded-lg py-3 pl-4 pr-10 text-gray-900 appearance-none focus:ring-2 focus:ring-[#006655] cursor-pointer outline-none"
                 >
-                  <option value="">Any Type</option>
+                  <option value="">{dict.any_type}</option>
                   <option value="house">House</option>
                   <option value="apartment">Apartment</option>
                   <option value="villa">Villa</option>
                   <option value="penthouse">Penthouse</option>
-                  <option value="condo">Condo</option>
-                  <option value="townhouse">Townhouse</option>
                 </select>
                 <span className="material-icons absolute right-3 top-3 text-gray-400 pointer-events-none">
                   expand_more
@@ -242,11 +283,9 @@ export default function FilterModal({ isOpen, onClose }: FilterModalProps) {
               </div>
             </div>
 
-            {/* Rooms */}
             <div className="space-y-4">
-              {/* Beds */}
               <div className="flex justify-between items-center">
-                <span className="text-sm font-medium text-gray-900">Bedrooms</span>
+                <span className="text-sm font-medium text-gray-900">{dict.bedrooms}</span>
                 <div className="flex items-center space-x-3 bg-[#f5f8f6] rounded-full p-1">
                   <button
                     onClick={() => setBeds((b) => Math.max(0, b - 1))}
@@ -256,7 +295,7 @@ export default function FilterModal({ isOpen, onClose }: FilterModalProps) {
                     <span className="material-icons text-base">remove</span>
                   </button>
                   <span className="text-sm font-semibold w-8 text-center">
-                    {beds === 0 ? 'Any' : `${beds}+`}
+                    {beds === 0 ? dict.any : `${beds}+`}
                   </span>
                   <button
                     onClick={() => setBeds((b) => b + 1)}
@@ -267,9 +306,8 @@ export default function FilterModal({ isOpen, onClose }: FilterModalProps) {
                 </div>
               </div>
 
-              {/* Baths */}
               <div className="flex justify-between items-center">
-                <span className="text-sm font-medium text-gray-900">Bathrooms</span>
+                <span className="text-sm font-medium text-gray-900">{dict.bathrooms}</span>
                 <div className="flex items-center space-x-3 bg-[#f5f8f6] rounded-full p-1">
                   <button
                     onClick={() => setBaths((b) => Math.max(0, b - 1))}
@@ -279,7 +317,7 @@ export default function FilterModal({ isOpen, onClose }: FilterModalProps) {
                     <span className="material-icons text-base">remove</span>
                   </button>
                   <span className="text-sm font-semibold w-8 text-center">
-                    {baths === 0 ? 'Any' : `${baths}+`}
+                    {baths === 0 ? dict.any : `${baths}+`}
                   </span>
                   <button
                     onClick={() => setBaths((b) => b + 1)}
@@ -292,10 +330,9 @@ export default function FilterModal({ isOpen, onClose }: FilterModalProps) {
             </div>
           </section>
 
-          {/* Section 4: Amenities */}
           <section>
             <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-4">
-              Amenities &amp; Features
+              {dict.amenities_label}
             </label>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
               {AMENITIES.map((amenity) => {
@@ -320,9 +357,6 @@ export default function FilterModal({ isOpen, onClose }: FilterModalProps) {
                       </span>
                       {amenity.label}
                     </div>
-                    {isActive && (
-                      <div className="absolute top-2 right-2 w-2 h-2 bg-[#006655] rounded-full" />
-                    )}
                   </label>
                 );
               })}
@@ -330,19 +364,18 @@ export default function FilterModal({ isOpen, onClose }: FilterModalProps) {
           </section>
         </div>
 
-        {/* Footer */}
         <footer className="bg-white border-t border-gray-100 px-8 py-6 sticky bottom-0 z-30 flex items-center justify-between">
           <button
             onClick={handleClear}
             className="text-sm font-medium text-gray-500 hover:text-gray-900 transition-colors underline decoration-gray-300 underline-offset-4"
           >
-            Clear all filters
+            {dict.clear_all}
           </button>
           <button
             onClick={handleApply}
             className="bg-[#19322F] hover:bg-[#19322F]/90 text-white px-8 py-3 rounded-lg font-medium shadow-lg shadow-[#19322F]/30 transition-all hover:shadow-[#19322F]/40 flex items-center gap-2 active:scale-95"
           >
-            Show Homes
+            {dict.show_homes}
             {activeFiltersCount > 0 && (
               <span className="bg-white/20 text-white text-xs font-bold px-2 py-0.5 rounded-full">
                 {activeFiltersCount}

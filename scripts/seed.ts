@@ -3,7 +3,7 @@ import { drizzle } from 'drizzle-orm/neon-http';
 import * as dotenv from 'dotenv';
 import { properties, propertyImages } from '../lib/db/schema';
 import { eq } from 'drizzle-orm';
-import { featuredProperties, newProperties } from '../app/data/properties';
+import { featuredProperties, newProperties } from '../app/data/mock-properties';
 
 dotenv.config();
 
@@ -31,6 +31,7 @@ async function main() {
         isExclusive: prop.isExclusive || false,
         isNew: prop.isNew || false,
         isFeatured: prop.isFeatured || false,
+        description: prop.description,
       }).onConflictDoUpdate({
         target: properties.id,
         set: {
@@ -38,6 +39,7 @@ async function main() {
           isExclusive: prop.isExclusive || false,
           isNew: prop.isNew || false,
           isFeatured: prop.isFeatured || false,
+          description: prop.description,
         }
       });
 

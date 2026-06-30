@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
+import { Suspense } from "react";
+import SessionVerifier from "@/app/components/SessionVerifier";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,7 +38,12 @@ export default async function RootLayout({
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
       </head>
-      <body className="min-h-full flex flex-col font-sans" suppressHydrationWarning>{children}</body>
+      <body className="min-h-full flex flex-col font-sans" suppressHydrationWarning>
+        <Suspense fallback={null}>
+          <SessionVerifier />
+        </Suspense>
+        {children}
+      </body>
     </html>
   );
 }

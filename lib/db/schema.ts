@@ -17,6 +17,7 @@ export const properties = pgTable('properties', {
   isExclusive: boolean('is_exclusive').default(false),
   isNew: boolean('is_new').default(false),
   isFeatured: boolean('is_featured').default(false),
+  description: text('description'),
 });
 
 export const propertyImages = pgTable('property_images', {

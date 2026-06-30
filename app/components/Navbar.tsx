@@ -1,11 +1,12 @@
 import React from 'react';
 import Link from 'next/link';
 import LanguageSelector from './LanguageSelector';
+import NavbarUserMenu from './NavbarUserMenu';
 import { getDictionary, Locale } from '@/lib/get-dictionary';
 
 export default async function Navbar({ lang = 'es' }: { lang?: string }) {
   const dict = await getDictionary(lang as Locale);
-  
+
   return (
     <nav className="sticky top-0 z-50 bg-[#EEF6F6]/95 backdrop-blur-md border-b border-[#19322F]/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -34,15 +35,9 @@ export default async function Navbar({ lang = 'es' }: { lang?: string }) {
               <span className="material-icons">notifications_none</span>
               <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full border-2 border-[#EEF6F6]"></span>
             </button>
-            <button className="flex items-center gap-2 pl-2 border-l border-[#19322F]/10 ml-2">
-              <div className="w-9 h-9 rounded-full bg-gray-200 overflow-hidden ring-2 ring-transparent hover:ring-[#006655] transition-all">
-                <img 
-                  alt="Profile" 
-                  className="w-full h-full object-cover" 
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAWhQZ663Bd08kmzjbOPmUk4UIxYooNONShMEFXLR-DtmVi6Oz-TiaY77SPwFk7g0OobkeZEOMvt6v29mSOD0Xm2g95WbBG3ZjWXmiABOUwGU0LOySRfVDo-JTXQ0-gtwjWxbmue0qDm91m-zEOEZwAW6iRFB1qC1bAU-wkjxm67Sbztq8w7srHkFT9bVEC86qG-FzhOBTomhAurNRmx9l8Yfqabk328NfdKuVLckgCdaPsNFE3yN65MeoRi05GA_gXIMwG4YDIeA"
-                />
-              </div>
-            </button>
+            <div className="flex items-center gap-2 pl-2 border-l border-[#19322F]/10 ml-2">
+              <NavbarUserMenu lang={lang} />
+            </div>
           </div>
         </div>
       </div>
